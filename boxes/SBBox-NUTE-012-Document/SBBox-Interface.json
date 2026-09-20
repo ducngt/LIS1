@@ -1,0 +1,16 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-012-Document",
+    "name": "Document",
+    "version": "4.0.0"
+  },
+  "provides": [
+    "research.document"
+  ],
+  "requires": [
+    "storage",
+    "identity",
+    "authorization"
+  ],
+  "aiReadable": true
+}

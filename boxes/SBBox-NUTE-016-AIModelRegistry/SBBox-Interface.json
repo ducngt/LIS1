@@ -1,0 +1,16 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-016-AIModelRegistry",
+    "name": "AIModelRegistry",
+    "version": "4.0.0"
+  },
+  "provides": [
+    "ai.model.registry"
+  ],
+  "requires": [
+    "storage",
+    "identity",
+    "authorization"
+  ],
+  "aiReadable": true
+}

@@ -1,0 +1,16 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-006-Evidence",
+    "name": "Evidence",
+    "version": "4.0.0"
+  },
+  "provides": [
+    "research.evidence"
+  ],
+  "requires": [
+    "storage",
+    "identity",
+    "authorization"
+  ],
+  "aiReadable": true
+}

@@ -1,0 +1,16 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-008-Council",
+    "name": "Council",
+    "version": "4.0.0"
+  },
+  "provides": [
+    "research.council"
+  ],
+  "requires": [
+    "storage",
+    "identity",
+    "authorization"
+  ],
+  "aiReadable": true
+}

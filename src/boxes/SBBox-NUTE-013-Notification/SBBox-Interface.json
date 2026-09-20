@@ -1,0 +1,6 @@
+{
+  "identity": {"id": "SBBox-NUTE-013-Notification", "name": "Notification", "version": "1.0.0"},
+  "capability": "notification",
+  "requires": ["storage", "audit"],
+  "aiReadable": true
+}

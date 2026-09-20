@@ -1,0 +1,6 @@
+{
+  "identity": {"id":"SBBox-NUTE-035-AIRouting","name":"AIRouting","version":"5.1.0"},
+  "provides": ["ai.routing"],
+  "requires": ["ai.model.registry","ai.inference","audit"],
+  "aiReadable": true
+}

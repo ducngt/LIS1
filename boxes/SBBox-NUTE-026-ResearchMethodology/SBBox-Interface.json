@@ -1,0 +1,18 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-026-ResearchMethodology",
+    "name": "ResearchMethodology",
+    "version": "4.0.0"
+  },
+  "provides": [
+    "research.methodology"
+  ],
+  "requires": [
+    "storage",
+    "identity",
+    "authorization",
+    "ai.inference",
+    "ai.knowledge"
+  ],
+  "aiReadable": true
+}

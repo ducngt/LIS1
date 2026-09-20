@@ -1,0 +1,16 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-005-Workflow",
+    "name": "Workflow",
+    "version": "4.0.0"
+  },
+  "provides": [
+    "research.workflow"
+  ],
+  "requires": [
+    "storage",
+    "identity",
+    "authorization"
+  ],
+  "aiReadable": true
+}

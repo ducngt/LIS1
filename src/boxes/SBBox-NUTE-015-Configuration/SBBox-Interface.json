@@ -1,0 +1,6 @@
+{
+  "identity": {"id": "SBBox-NUTE-015-Configuration", "name": "Configuration", "version": "1.0.0"},
+  "capability": "configuration",
+  "requires": ["storage", "audit"],
+  "aiReadable": true
+}

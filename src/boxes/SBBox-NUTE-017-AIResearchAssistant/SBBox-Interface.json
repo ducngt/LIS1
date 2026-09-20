@@ -1,0 +1,6 @@
+{
+  "identity": {"id": "SBBox-NUTE-017-AIResearchAssistant", "name": "AIResearchAssistant", "version": "1.0.0"},
+  "capability": "aIResearchAssistant",
+  "requires": ["storage", "audit"],
+  "aiReadable": true
+}

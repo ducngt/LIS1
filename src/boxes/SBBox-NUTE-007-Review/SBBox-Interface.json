@@ -1,0 +1,6 @@
+{
+  "identity": {"id": "SBBox-NUTE-007-Review", "name": "Review", "version": "1.0.0"},
+  "capability": "review",
+  "requires": ["storage", "audit"],
+  "aiReadable": true
+}

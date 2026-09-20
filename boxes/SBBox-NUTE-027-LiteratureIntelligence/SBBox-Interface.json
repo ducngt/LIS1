@@ -1,0 +1,18 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-027-LiteratureIntelligence",
+    "name": "LiteratureIntelligence",
+    "version": "4.0.0"
+  },
+  "provides": [
+    "research.literature"
+  ],
+  "requires": [
+    "storage",
+    "identity",
+    "authorization",
+    "ai.inference",
+    "ai.knowledge"
+  ],
+  "aiReadable": true
+}

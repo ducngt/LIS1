@@ -1,0 +1,18 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-028-AcademicWriting",
+    "name": "AcademicWriting",
+    "version": "4.0.0"
+  },
+  "provides": [
+    "research.writing"
+  ],
+  "requires": [
+    "storage",
+    "identity",
+    "authorization",
+    "ai.inference",
+    "ai.knowledge"
+  ],
+  "aiReadable": true
+}

@@ -1,0 +1,7 @@
+{
+  "identity": {"id": "SBBox-NUTE-016-AIProvider", "name": "AIModelRegistry", "version": "3.0.0"},
+  "capability": "ai.model.registry",
+  "provides": ["ai.provider.configure", "ai.model.discover", "ai.model.capability.probe", "ai.model.metadata.read"],
+  "requires": ["storage", "secret.encryption", "audit", "ai.inference"],
+  "aiReadable": true
+}

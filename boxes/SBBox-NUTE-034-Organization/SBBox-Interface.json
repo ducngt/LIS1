@@ -1,0 +1,6 @@
+{
+  "identity": {"id":"SBBox-NUTE-034-Organization","name":"Organization","version":"5.1.0"},
+  "provides": ["organization.management"],
+  "requires": ["storage","identity","authorization","audit"],
+  "aiReadable": true
+}

@@ -1,0 +1,6 @@
+{
+  "identity": {"id": "SBBox-NUTE-009-Recognition", "name": "Recognition", "version": "1.0.0"},
+  "capability": "recognition",
+  "requires": ["storage", "audit"],
+  "aiReadable": true
+}

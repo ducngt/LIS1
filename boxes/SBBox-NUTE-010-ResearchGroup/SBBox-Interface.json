@@ -1,0 +1,16 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-010-ResearchGroup",
+    "name": "ResearchGroup",
+    "version": "4.0.0"
+  },
+  "provides": [
+    "research.group"
+  ],
+  "requires": [
+    "storage",
+    "identity",
+    "authorization"
+  ],
+  "aiReadable": true
+}

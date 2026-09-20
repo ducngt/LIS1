@@ -1,0 +1,16 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-007-Review",
+    "name": "Review",
+    "version": "4.0.0"
+  },
+  "provides": [
+    "research.review"
+  ],
+  "requires": [
+    "storage",
+    "identity",
+    "authorization"
+  ],
+  "aiReadable": true
+}

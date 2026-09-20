@@ -1,0 +1,9 @@
+{
+  "capability": "notification",
+  "version": "1.0.0",
+  "description": "Thông báo người dùng",
+  "contract": [
+    "send"
+  ],
+  "technologyAgnostic": true
+}

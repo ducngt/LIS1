@@ -1,0 +1,10 @@
+{
+  "capability": "ai.inference",
+  "version": "1.0.0",
+  "description": "Suy luận AI độc lập provider",
+  "contract": [
+    "generate",
+    "stream"
+  ],
+  "technologyAgnostic": true
+}

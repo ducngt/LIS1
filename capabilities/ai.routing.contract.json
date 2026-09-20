@@ -1,0 +1,1 @@
+{"capability":"ai.routing","version":"1.0.0","input":{"route":"string","request":"AIRequest"},"output":{"result":"string","provider":"ProviderMetadata","attempts":"Attempt[]"},"rule":"Fallback implementation must not alter business contract."}

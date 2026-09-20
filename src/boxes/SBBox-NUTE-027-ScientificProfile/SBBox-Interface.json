@@ -1,0 +1,5 @@
+{
+  "identity": {"id":"SBBox-NUTE-027-ScientificProfile","name":"Scientific Profile","version":"1.1.0"},
+  "provides": ["scientific.profile.read","scientific.profile.update","scientific.profile.sync","scientific.profile.documents","scientific.profile.export","scientific.profile.approveExport"],
+  "requires": ["storage","binary-storage","document.text.extract","identity","organization","authorization","audit"]
+}

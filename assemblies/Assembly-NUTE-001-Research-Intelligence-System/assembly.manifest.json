@@ -1,0 +1,87 @@
+{
+  "assembly": {
+    "id": "Assembly-NUTE-001-Research-Intelligence-System",
+    "version": "5.3.0",
+    "purpose": "AI-Native Research Intelligence System"
+  },
+  "principles": [
+    "Capability First",
+    "WHAT/HOW separation",
+    "One-way dependency",
+    "AI-readable architecture",
+    "Human-AI governance"
+  ],
+  "boxes": [
+    "SBBox-NUTE-001-Identity",
+    "SBBox-NUTE-002-AccessControl",
+    "SBBox-NUTE-003-ResearchObject",
+    "SBBox-NUTE-004-ResearchType",
+    "SBBox-NUTE-005-Workflow",
+    "SBBox-NUTE-006-Evidence",
+    "SBBox-NUTE-007-Review",
+    "SBBox-NUTE-008-Council",
+    "SBBox-NUTE-009-Recognition",
+    "SBBox-NUTE-010-ResearchGroup",
+    "SBBox-NUTE-011-Participation",
+    "SBBox-NUTE-012-Document",
+    "SBBox-NUTE-013-Notification",
+    "SBBox-NUTE-014-Audit",
+    "SBBox-NUTE-015-Configuration",
+    "SBBox-NUTE-016-AIModelRegistry",
+    "SBBox-NUTE-017-AIResearchAssistant",
+    "SBBox-NUTE-018-AIKnowledge",
+    "SBBox-NUTE-019-AIAudit",
+    "SBBox-NUTE-020-AIOrchestrator",
+    "SBBox-NUTE-021-DecisionSupport",
+    "SBBox-NUTE-022-PolicyCompliance",
+    "SBBox-NUTE-023-ResearchIntelligence",
+    "SBBox-NUTE-024-PortfolioIntelligence",
+    "SBBox-NUTE-025-HumanAIGovernance",
+    "SBBox-NUTE-026-ResearchMethodology",
+    "SBBox-NUTE-027-LiteratureIntelligence",
+    "SBBox-NUTE-028-AcademicWriting",
+    "SBBox-NUTE-029-ResearchDataIntelligence",
+    "SBBox-NUTE-030-CitationIntelligence",
+    "SBBox-NUTE-031-ResearchIntegrity",
+    "SBBox-NUTE-032-PublicationIntelligence",
+    "SBBox-NUTE-033-ResearchCoach",
+    "SBBox-NUTE-034-Organization",
+    "SBBox-NUTE-035-AIRouting"
+  ],
+  "capabilityBindings": {
+    "storage": "Wire-Adapter-JSONStore-Development",
+    "binary-storage": "Wire-Adapter-LocalFiles-Development",
+    "secret.encryption": "Wire-Adapter-AES256GCM",
+    "ai.inference": "Wire-Adapter-AI-Gateway",
+    "ai.model.discovery": "Wire-Adapter-AI-Gateway",
+    "document.text.extract": "Wire-Adapter-DocumentExtractor",
+    "ai.routing": "Wire-Adapter-AI-Router",
+    "document.native.ai.read": "Wire-Adapter-AI-Gateway"
+  },
+  "intelligenceLayers": {
+    "researcher": [
+      "research.coach",
+      "research.literature",
+      "research.methodology",
+      "research.data",
+      "research.citation",
+      "research.writing",
+      "research.integrity",
+      "research.publication"
+    ],
+    "institutional": [
+      "research.workflow",
+      "research.evidence",
+      "ai.decision.support",
+      "policy.compliance",
+      "portfolio.intelligence",
+      "human.ai.governance"
+    ]
+  },
+  "institutionalCapabilities": [
+    "organization.management",
+    "ai.routing",
+    "workflow.human-ai-decision"
+  ],
+  "version": "5.3.0"
+}

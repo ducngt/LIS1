@@ -1,0 +1,16 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-014-Audit",
+    "name": "Audit",
+    "version": "4.0.0"
+  },
+  "provides": [
+    "audit"
+  ],
+  "requires": [
+    "storage",
+    "identity",
+    "authorization"
+  ],
+  "aiReadable": true
+}

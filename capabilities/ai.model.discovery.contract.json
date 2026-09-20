@@ -1,0 +1,10 @@
+{
+  "capability": "ai.model.discovery",
+  "version": "1.0.0",
+  "description": "Khám phá model và metadata",
+  "contract": [
+    "listModels",
+    "probeCapabilities"
+  ],
+  "technologyAgnostic": true
+}

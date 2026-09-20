@@ -1,0 +1,10 @@
+{
+  "capability": "authorization",
+  "version": "1.0.0",
+  "description": "Kiểm tra quyền theo capability/scope",
+  "contract": [
+    "can",
+    "require"
+  ],
+  "technologyAgnostic": true
+}

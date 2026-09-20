@@ -1,0 +1,18 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-031-ResearchIntegrity",
+    "name": "ResearchIntegrity",
+    "version": "4.0.0"
+  },
+  "provides": [
+    "research.integrity"
+  ],
+  "requires": [
+    "storage",
+    "identity",
+    "authorization",
+    "ai.inference",
+    "ai.knowledge"
+  ],
+  "aiReadable": true
+}

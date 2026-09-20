@@ -1,0 +1,1 @@
+{"identity":{"id":"SBBox-NUTE-026-PersonnelDirectory","name":"Personnel Directory","version":"1.0.0"},"provides":["personnel.list","personnel.manage","personnel.account.provision"],"requires":["storage","identity","authorization","audit"]}

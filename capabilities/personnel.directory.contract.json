@@ -1,0 +1,1 @@
+{"capability":"personnel.directory","version":"1.0.0","operations":["list","save","provisionAccount"],"errors":["INVALID_ORGANIZATION","DUPLICATE_USERNAME","FORBIDDEN"]}

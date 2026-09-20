@@ -1,0 +1,16 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-002-AccessControl",
+    "name": "AccessControl",
+    "version": "4.0.0"
+  },
+  "provides": [
+    "authorization.rbac"
+  ],
+  "requires": [
+    "storage",
+    "identity",
+    "authorization"
+  ],
+  "aiReadable": true
+}

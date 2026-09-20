@@ -1,0 +1,16 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-015-Configuration",
+    "name": "Configuration",
+    "version": "4.0.0"
+  },
+  "provides": [
+    "configuration"
+  ],
+  "requires": [
+    "storage",
+    "identity",
+    "authorization"
+  ],
+  "aiReadable": true
+}

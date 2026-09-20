@@ -1,0 +1,18 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-033-ResearchCoach",
+    "name": "ResearchCoach",
+    "version": "4.0.0"
+  },
+  "provides": [
+    "research.coach"
+  ],
+  "requires": [
+    "storage",
+    "identity",
+    "authorization",
+    "ai.inference",
+    "ai.knowledge"
+  ],
+  "aiReadable": true
+}

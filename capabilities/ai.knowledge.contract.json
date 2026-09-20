@@ -1,0 +1,10 @@
+{
+  "capability": "ai.knowledge",
+  "version": "1.0.0",
+  "description": "Truy xuất tri thức thể chế/nghiên cứu có provenance",
+  "contract": [
+    "retrieve",
+    "citeContext"
+  ],
+  "technologyAgnostic": true
+}

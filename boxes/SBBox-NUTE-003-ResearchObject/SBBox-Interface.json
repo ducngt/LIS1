@@ -1,0 +1,16 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-003-ResearchObject",
+    "name": "ResearchObject",
+    "version": "4.0.0"
+  },
+  "provides": [
+    "research.object"
+  ],
+  "requires": [
+    "storage",
+    "identity",
+    "authorization"
+  ],
+  "aiReadable": true
+}

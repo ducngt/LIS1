@@ -1,0 +1,58 @@
+{
+  "assembly": {
+    "id": "Assembly-NUTE-001-Research-Management",
+    "version": "5.4.1",
+    "purpose": "NUTE AI-Native Research Intelligence System"
+  },
+  "boxes": [
+    "SBBox-NUTE-001-Identity",
+    "SBBox-NUTE-002-AccessControl",
+    "SBBox-NUTE-003-ResearchObject",
+    "SBBox-NUTE-004-ResearchType",
+    "SBBox-NUTE-005-Workflow",
+    "SBBox-NUTE-006-Evidence",
+    "SBBox-NUTE-007-Review",
+    "SBBox-NUTE-008-Council",
+    "SBBox-NUTE-009-Recognition",
+    "SBBox-NUTE-010-ResearchGroup",
+    "SBBox-NUTE-011-Participation",
+    "SBBox-NUTE-012-Document",
+    "SBBox-NUTE-013-Notification",
+    "SBBox-NUTE-014-Audit",
+    "SBBox-NUTE-015-Configuration",
+    "SBBox-NUTE-016-AIProvider",
+    "SBBox-NUTE-017-AIResearchAssistant",
+    "SBBox-NUTE-018-AIKnowledge",
+    "SBBox-NUTE-019-AIAudit",
+    "SBBox-NUTE-020-AIOrchestrator",
+    "SBBox-NUTE-021-DecisionSupport",
+    "SBBox-NUTE-022-PolicyCompliance",
+    "SBBox-NUTE-023-ResearchIntelligence",
+    "SBBox-NUTE-024-PortfolioIntelligence",
+    "SBBox-NUTE-025-HumanAIGovernance",
+    "SBBox-NUTE-026-PersonnelDirectory",
+    "SBBox-NUTE-027-ScientificProfile"
+  ],
+  "capabilityBindings": {
+    "storage": "Wire-Adapter-JsonStore",
+    "secret.encryption": "Wire-Adapter-AES256GCM",
+    "ai.inference": "Wire-Adapter-AI-Gateway",
+    "ai.model.discovery": "Wire-Adapter-AI-Gateway",
+    "document.text.extract": "Wire-Adapter-DocumentExtractor",
+    "binary-storage": "Wire-Adapter-LocalFiles-Development",
+    "document.native.ai.read": "Wire-Adapter-AI-Gateway"
+  },
+  "version": "5.4.1",
+  "capabilities": {
+    "ai.orchestration": "SBBox-NUTE-020-AIOrchestrator",
+    "ai.decision.support": "SBBox-NUTE-021-DecisionSupport",
+    "ai.policy.compliance": "SBBox-NUTE-022-PolicyCompliance",
+    "ai.research.intelligence": "SBBox-NUTE-023-ResearchIntelligence",
+    "ai.portfolio.intelligence": "SBBox-NUTE-024-PortfolioIntelligence",
+    "ai.human.governance": "SBBox-NUTE-025-HumanAIGovernance",
+    "ai.model.registry": "SBBox-NUTE-016-AIProvider",
+    "personnel.directory": "SBBox-NUTE-026-PersonnelDirectory",
+    "scientific.profile": "SBBox-NUTE-027-ScientificProfile",
+    "research.approval.governance": "SBBox-NUTE-025-HumanAIGovernance"
+  }
+}

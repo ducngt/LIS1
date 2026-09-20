@@ -1,0 +1,15 @@
+{
+  "id": "Wire-Adapter-DocumentExtractor",
+  "version": "1.0.0",
+  "implements": "document.text.extract",
+  "inputs": {
+    "file": "binary",
+    "filename": "string",
+    "mimeType": "string?"
+  },
+  "outputs": {
+    "text": "string",
+    "status": "EXTRACTED|NO_TEXT|FAILED",
+    "metadata": "object"
+  }
+}

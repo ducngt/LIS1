@@ -1,0 +1,10 @@
+{
+  "capability": "audit",
+  "version": "1.0.0",
+  "description": "Ghi dấu vết bất biến",
+  "contract": [
+    "append",
+    "query"
+  ],
+  "technologyAgnostic": true
+}

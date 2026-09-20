@@ -1,0 +1,15 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-021-DecisionSupport",
+    "name": "DecisionSupport",
+    "version": "2.0.0"
+  },
+  "provides": [
+    "ai.decision.support"
+  ],
+  "requires": [
+    "storage",
+    "ai.inference",
+    "audit"
+  ]
+}

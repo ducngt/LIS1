@@ -1,0 +1,10 @@
+{
+  "capability": "identity",
+  "version": "1.0.0",
+  "description": "Danh tính và actor context",
+  "contract": [
+    "currentActor",
+    "getIdentity"
+  ],
+  "technologyAgnostic": true
+}

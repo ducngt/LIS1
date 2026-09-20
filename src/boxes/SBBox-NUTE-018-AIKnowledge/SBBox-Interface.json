@@ -1,0 +1,15 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-018-AIKnowledge",
+    "name": "AIKnowledge",
+    "version": "2.0.0"
+  },
+  "capability": "aIKnowledge",
+  "requires": [
+    "storage",
+    "binary-storage",
+    "document.text.extract",
+    "audit"
+  ],
+  "aiReadable": true
+}

@@ -1,0 +1,53 @@
+{
+  "identity": {
+    "id": "Assembly-NUTE-001-Research-Intelligence-System",
+    "version": "5.1.0",
+    "purpose": "AI-Native Research Intelligence System"
+  },
+  "requires": [
+    "storage",
+    "binary-storage",
+    "secret.encryption",
+    "ai.inference",
+    "ai.model.discovery",
+    "document.text.extract",
+    "ai.routing"
+  ],
+  "composition": [
+    "SBBox-NUTE-001-Identity",
+    "SBBox-NUTE-002-AccessControl",
+    "SBBox-NUTE-003-ResearchObject",
+    "SBBox-NUTE-004-ResearchType",
+    "SBBox-NUTE-005-Workflow",
+    "SBBox-NUTE-006-Evidence",
+    "SBBox-NUTE-007-Review",
+    "SBBox-NUTE-008-Council",
+    "SBBox-NUTE-009-Recognition",
+    "SBBox-NUTE-010-ResearchGroup",
+    "SBBox-NUTE-011-Participation",
+    "SBBox-NUTE-012-Document",
+    "SBBox-NUTE-013-Notification",
+    "SBBox-NUTE-014-Audit",
+    "SBBox-NUTE-015-Configuration",
+    "SBBox-NUTE-016-AIModelRegistry",
+    "SBBox-NUTE-017-AIResearchAssistant",
+    "SBBox-NUTE-018-AIKnowledge",
+    "SBBox-NUTE-019-AIAudit",
+    "SBBox-NUTE-020-AIOrchestrator",
+    "SBBox-NUTE-021-DecisionSupport",
+    "SBBox-NUTE-022-PolicyCompliance",
+    "SBBox-NUTE-023-ResearchIntelligence",
+    "SBBox-NUTE-024-PortfolioIntelligence",
+    "SBBox-NUTE-025-HumanAIGovernance",
+    "SBBox-NUTE-026-ResearchMethodology",
+    "SBBox-NUTE-027-LiteratureIntelligence",
+    "SBBox-NUTE-028-AcademicWriting",
+    "SBBox-NUTE-029-ResearchDataIntelligence",
+    "SBBox-NUTE-030-CitationIntelligence",
+    "SBBox-NUTE-031-ResearchIntegrity",
+    "SBBox-NUTE-032-PublicationIntelligence",
+    "SBBox-NUTE-033-ResearchCoach",
+    "SBBox-NUTE-034-Organization",
+    "SBBox-NUTE-035-AIRouting"
+  ]
+}

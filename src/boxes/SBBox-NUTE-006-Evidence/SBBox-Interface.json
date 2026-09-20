@@ -1,0 +1,6 @@
+{
+  "identity": {"id": "SBBox-NUTE-006-Evidence", "name": "Evidence", "version": "1.0.0"},
+  "capability": "evidence",
+  "requires": ["storage", "audit"],
+  "aiReadable": true
+}

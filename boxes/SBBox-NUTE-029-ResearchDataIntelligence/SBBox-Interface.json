@@ -1,0 +1,18 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-029-ResearchDataIntelligence",
+    "name": "ResearchDataIntelligence",
+    "version": "4.0.0"
+  },
+  "provides": [
+    "research.data"
+  ],
+  "requires": [
+    "storage",
+    "identity",
+    "authorization",
+    "ai.inference",
+    "ai.knowledge"
+  ],
+  "aiReadable": true
+}

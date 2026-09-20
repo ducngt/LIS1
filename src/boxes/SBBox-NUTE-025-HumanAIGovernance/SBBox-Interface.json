@@ -1,0 +1,14 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-025-HumanAIGovernance",
+    "name": "HumanAIGovernance",
+    "version": "2.0.0"
+  },
+  "provides": [
+    "ai.human.governance"
+  ],
+  "requires": [
+    "storage",
+    "audit"
+  ]
+}

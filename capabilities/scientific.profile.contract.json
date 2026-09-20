@@ -1,0 +1,6 @@
+{
+  "capability": "scientific.profile",
+  "version": "1.1.0",
+  "operations": ["read", "update", "sync", "uploadDocuments", "removeDocument", "export", "approveExport"],
+  "requires": ["binary-storage", "document.text.extract", "identity", "organization", "authorization"]
+}

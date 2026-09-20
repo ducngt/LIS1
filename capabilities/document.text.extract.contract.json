@@ -1,0 +1,14 @@
+{
+  "capability": "document.text.extract",
+  "version": "1.0.0",
+  "description": "Trích xuất văn bản máy đọc từ tài liệu PDF, DOC, DOCX, TXT, MD, RTF để Smart Box và AI sử dụng mà không phụ thuộc công nghệ parser cụ thể.",
+  "input": {
+    "file": "binary/document reference"
+  },
+  "output": {
+    "text": "string",
+    "status": "EXTRACTED|NO_TEXT|FAILED",
+    "metadata": "object"
+  },
+  "errors": ["UNSUPPORTED_FORMAT", "FILE_TOO_LARGE", "EXTRACTION_FAILED"]
+}

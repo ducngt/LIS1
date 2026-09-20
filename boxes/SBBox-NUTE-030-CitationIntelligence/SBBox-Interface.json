@@ -1,0 +1,18 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-030-CitationIntelligence",
+    "name": "CitationIntelligence",
+    "version": "4.0.0"
+  },
+  "provides": [
+    "research.citation"
+  ],
+  "requires": [
+    "storage",
+    "identity",
+    "authorization",
+    "ai.inference",
+    "ai.knowledge"
+  ],
+  "aiReadable": true
+}

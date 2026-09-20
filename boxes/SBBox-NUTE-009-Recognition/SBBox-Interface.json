@@ -1,0 +1,16 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-009-Recognition",
+    "name": "Recognition",
+    "version": "4.0.0"
+  },
+  "provides": [
+    "research.recognition"
+  ],
+  "requires": [
+    "storage",
+    "identity",
+    "authorization"
+  ],
+  "aiReadable": true
+}

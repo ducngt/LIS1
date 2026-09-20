@@ -1,0 +1,17 @@
+services:
+  nute-research:
+    build: .
+    container_name: nute-research-sbbs
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3000
+      COOKIE_SECURE: "0"
+      # For production set this in an external .env or secret manager.
+      # NUTE_MASTER_ENCRYPTION_KEY: "...base64 32 bytes..."
+    volumes:
+      - nute_research_data:/app/data
+volumes:
+  nute_research_data:

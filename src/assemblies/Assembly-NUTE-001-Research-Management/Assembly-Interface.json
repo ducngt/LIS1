@@ -1,0 +1,5 @@
+{
+  "identity": {"id": "Assembly-NUTE-001-Research-Management", "version": "1.0.0"},
+  "provides": ["research-management", "research-ai-assistance"],
+  "requires": ["storage", "secret.encryption", "ai.inference"]
+}

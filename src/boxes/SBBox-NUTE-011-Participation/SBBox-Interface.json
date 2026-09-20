@@ -1,0 +1,6 @@
+{
+  "identity": {"id": "SBBox-NUTE-011-Participation", "name": "Participation", "version": "1.0.0"},
+  "capability": "participation",
+  "requires": ["storage", "audit"],
+  "aiReadable": true
+}

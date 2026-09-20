@@ -1,0 +1,6 @@
+{
+  "identity": {"id": "SBBox-NUTE-019-AIAudit", "name": "AIAudit", "version": "1.0.0"},
+  "capability": "aIAudit",
+  "requires": ["storage", "audit"],
+  "aiReadable": true
+}

@@ -1,0 +1,6 @@
+{
+  "identity": {"id": "SBBox-NUTE-008-Council", "name": "Council", "version": "1.0.0"},
+  "capability": "council",
+  "requires": ["storage", "audit"],
+  "aiReadable": true
+}

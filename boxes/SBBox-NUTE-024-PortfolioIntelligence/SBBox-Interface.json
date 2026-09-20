@@ -1,0 +1,18 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-024-PortfolioIntelligence",
+    "name": "PortfolioIntelligence",
+    "version": "4.0.0"
+  },
+  "provides": [
+    "portfolio.intelligence"
+  ],
+  "requires": [
+    "storage",
+    "identity",
+    "authorization",
+    "ai.inference",
+    "ai.knowledge"
+  ],
+  "aiReadable": true
+}

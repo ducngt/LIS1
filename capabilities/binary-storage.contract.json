@@ -1,0 +1,12 @@
+{
+  "capability": "binary-storage",
+  "version": "1.0.0",
+  "description": "Lưu file/minh chứng nhị phân",
+  "contract": [
+    "putObject",
+    "getObject",
+    "deleteObject",
+    "checksum"
+  ],
+  "technologyAgnostic": true
+}

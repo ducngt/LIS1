@@ -1,0 +1,6 @@
+{
+  "identity": {"id": "SBBox-NUTE-002-AccessControl", "name": "AccessControl", "version": "1.0.0"},
+  "capability": "accessControl",
+  "requires": ["storage", "audit"],
+  "aiReadable": true
+}

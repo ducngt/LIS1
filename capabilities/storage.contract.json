@@ -1,0 +1,12 @@
+{
+  "capability": "storage",
+  "version": "1.0.0",
+  "description": "Lưu trạng thái domain có cấu trúc",
+  "contract": [
+    "get",
+    "put",
+    "query",
+    "transaction"
+  ],
+  "technologyAgnostic": true
+}

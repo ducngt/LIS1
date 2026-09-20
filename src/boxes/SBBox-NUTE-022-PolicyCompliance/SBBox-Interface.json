@@ -1,0 +1,15 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-022-PolicyCompliance",
+    "name": "PolicyCompliance",
+    "version": "2.0.0"
+  },
+  "provides": [
+    "ai.policy.compliance"
+  ],
+  "requires": [
+    "storage",
+    "ai.inference",
+    "audit"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-032-PublicationIntelligence",
+    "name": "PublicationIntelligence",
+    "version": "4.0.0"
+  },
+  "provides": [
+    "research.publication"
+  ],
+  "requires": [
+    "storage",
+    "identity",
+    "authorization",
+    "ai.inference",
+    "ai.knowledge"
+  ],
+  "aiReadable": true
+}

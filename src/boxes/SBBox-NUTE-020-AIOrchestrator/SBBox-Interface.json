@@ -1,0 +1,15 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-020-AIOrchestrator",
+    "name": "AIOrchestrator",
+    "version": "2.0.0"
+  },
+  "provides": [
+    "ai.orchestration"
+  ],
+  "requires": [
+    "storage",
+    "ai.inference",
+    "audit"
+  ]
+}

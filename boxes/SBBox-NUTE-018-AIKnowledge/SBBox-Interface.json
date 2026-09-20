@@ -1,0 +1,18 @@
+{
+  "identity": {
+    "id": "SBBox-NUTE-018-AIKnowledge",
+    "name": "AIKnowledge",
+    "version": "4.0.0"
+  },
+  "provides": [
+    "ai.knowledge"
+  ],
+  "requires": [
+    "storage",
+    "identity",
+    "authorization",
+    "ai.inference",
+    "ai.knowledge"
+  ],
+  "aiReadable": true
+}

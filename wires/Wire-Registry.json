@@ -1,0 +1,13 @@
+{
+  "version": "5.1.0",
+  "bindings": {
+    "storage": "Wire-Adapter-JSONStore-Development",
+    "binary-storage": "Wire-Adapter-LocalFiles-Development",
+    "secret.encryption": "Wire-Adapter-AES256GCM",
+    "ai.inference": "Wire-Adapter-AI-Gateway",
+    "ai.model.discovery": "Wire-Adapter-AI-Gateway",
+    "document.text.extract": "Wire-Adapter-DocumentExtractor",
+    "ai.routing": "Wire-Adapter-AI-Router"
+  },
+  "rule": "Box asks WHAT; Wire decides HOW."
+}
