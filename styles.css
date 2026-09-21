@@ -115,3 +115,6 @@ body{font-size:18px;line-height:1.55}
 
 /* V5.4 workflow dashboard */
 .flow-board{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px;margin-top:14px}.flow-card{border:1px solid #d9e3f5;border-radius:16px;padding:16px;background:linear-gradient(180deg,#fff,#f8fbff)}.flow-card small{display:block;color:#6b7892;margin-top:4px}.flow-next{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.flow-step{font-size:13px;padding:7px 10px;border-radius:999px;background:#eef3fb;color:#42516d}.flow-step.ready{background:#e8fff6;color:#0b7c5a;border:1px solid #b8efd9}.flow-step.waiting{border:1px solid #d7e1f0}
+
+/* V5.4.2 AI Browser BYOK */
+.ai-security{margin-top:18px;padding:16px;border:1px solid #dbe5f5;border-radius:14px;background:#f7faff}.ai-security p{margin:6px 0 0}.inline{display:flex;gap:8px;align-items:center}.inline input{flex:1}.btn.danger{border-color:#f0b9b9;color:#9d1d1d;background:#fff7f7}
