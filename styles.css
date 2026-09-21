@@ -118,3 +118,6 @@ body{font-size:18px;line-height:1.55}
 
 /* V5.4.2 AI Browser BYOK */
 .ai-security{margin-top:18px;padding:16px;border:1px solid #dbe5f5;border-radius:14px;background:#f7faff}.ai-security p{margin:6px 0 0}.inline{display:flex;gap:8px;align-items:center}.inline input{flex:1}.btn.danger{border-color:#f0b9b9;color:#9d1d1d;background:#fff7f7}
+
+/* V5.5 AI Form Studio + digital signatures */
+.check-list{display:grid;gap:8px;padding:10px 12px;border:1px solid var(--border,#d7e0ef);border-radius:12px;background:#fff}.check-list label{display:flex;gap:8px;align-items:flex-start}.signature-list{display:grid;gap:10px;margin-top:14px}.signature-card{border:1px solid #d7e0ef;border-radius:12px;padding:12px;display:grid;gap:4px}.signature-card.valid{border-color:#86c99a;background:#f3fff6}.signature-card.invalid{border-color:#e4a1a1;background:#fff5f5}.signature-card span{font-weight:700}.signature-card .code{font-size:11px;word-break:break-all}.field-help{display:block;margin-top:6px;color:#667085;font-size:12px}

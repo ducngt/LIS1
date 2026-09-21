@@ -1,7 +1,7 @@
 (function(){
   'use strict';
-  const KEY='nute-ris-v542-full-demo-state';
-  const SESSION='nute-ris-v542-demo-user';
+  const KEY='nute-ris-v551-full-demo-state';
+  const SESSION='nute-ris-v551-demo-user';
   const now=()=>new Date().toISOString();
   const uid=(p='id')=>`${p}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2,8)}`;
   const clone=x=>JSON.parse(JSON.stringify(x));
@@ -83,12 +83,16 @@
     };
     const scientificProfiles={};
     const aiCenter={autopilot:false,workItems:[{id:'wi-1',status:'PENDING',decisionPoint:'APPROVAL_LEVEL_2',label:'Phân tích hồ sơ trước duyệt cấp 2',researchId:'r-001',createdAt:'2026-09-20T08:00:00Z'}],recommendations:[{id:'rec-1',decisionPoint:'EVIDENCE_REVIEW',researchId:'r-002',createdAt:'2026-09-19T09:00:00Z',structured:{summary:'Minh chứng đăng ký đã có nhưng cần xác minh nguồn liên kết trước khi chuyển bước.'}}],decisions:[]};
-    const audit=[{id:'a-1',at:'2026-09-20T08:20:00Z',actorId:'u-admin',action:'DEMO_READY',entityType:'SYSTEM',entityId:'V5.4.2',details:{mode:'GitHub Pages full test'}}];
-    return {version:'5.4.2-pages-full',orgs,roles,users,personnel,types,workflows,research,knowledge,providers,researcherProfiles,scientificProfiles,aiCenter,audit};
+    const audit=[{id:'a-1',at:'2026-09-20T08:20:00Z',actorId:'u-admin',action:'DEMO_READY',entityType:'SYSTEM',entityId:'V5.5.1',details:{mode:'GitHub Pages full test + AI Form Studio + pluggable digital signature capability/adapters'}}];
+    const formTemplates=[{id:'form-tpl-001',code:'RESEARCH_REGISTRATION',name:'Phiếu đăng ký đề tài NCKH',version:'1.0.0',status:'PUBLISHED',knowledgeIds:['k-1'],legalBasis:[{knowledgeId:'k-1',title:'Quy định quản lý hoạt động nghiên cứu khoa học',citation:'Quy định demo - phần đăng ký'}],fields:[{id:'f-title',code:'TITLE',label:'Tên đề tài',type:'text',required:true,citation:'Quy định demo - đăng ký'},{id:'f-owner',code:'OWNER',label:'Chủ nhiệm đề tài',type:'text',required:true,citation:'Quy định demo - đăng ký'},{id:'f-org',code:'ORGANIZATION',label:'Đơn vị chủ trì',type:'text',required:true,citation:'Quy định demo - đăng ký'},{id:'f-objectives',code:'OBJECTIVES',label:'Mục tiêu nghiên cứu',type:'textarea',required:true,citation:'Quy định demo - thuyết minh'},{id:'f-method',code:'METHOD',label:'Phương pháp nghiên cứu',type:'textarea',required:true,citation:'Quy định demo - thuyết minh'},{id:'f-products',code:'PRODUCTS',label:'Sản phẩm dự kiến',type:'textarea',required:true,citation:'Quy định demo - kết quả'}],signaturePolicy:{required:true,minimumSignatures:3,requiredApprovalLevels:[2,3,4],allowedRoles:['APPROVER_LEVEL_2','APPROVER_LEVEL_3','APPROVER_LEVEL_4','SYSTEM_ADMIN']},createdAt:now(),updatedAt:now(),generatedByAI:true}];
+    const formInstances=[];
+    return {version:'5.5.1-pages-full',orgs,roles,users,personnel,types,workflows,research,knowledge,providers,researcherProfiles,scientificProfiles,aiCenter,formTemplates,formInstances,audit};
   }
 
   function load(){try{const x=JSON.parse(localStorage.getItem(KEY)||'null');return x&&x.version?x:initialState()}catch{return initialState()}}
   let db=load();
+  db.formTemplates=db.formTemplates||[];
+  db.formInstances=db.formInstances||[];
   function save(){localStorage.setItem(KEY,JSON.stringify(db))}
   function currentUser(){const id=sessionStorage.getItem(SESSION);return db.users.find(u=>u.id===id)||null}
   function permissions(user){if(!user)return[];const p=new Set();for(const rc of user.roles||[]){for(const x of (db.roles.find(r=>r.code===rc)?.permissions||[]))p.add(x)}return [...p]}
@@ -114,7 +118,7 @@
     await new Promise(r=>setTimeout(r,20));
     const u=currentUser();
     const url=new URL(rawUrl,location.origin); const path=url.pathname; const method=(opts.method||'GET').toUpperCase(); const data=body(opts);
-    if(path==='/api/bootstrap/status')return {initialized:true,version:'5.4.2-pages-full'};
+    if(path==='/api/bootstrap/status')return {initialized:true,version:'5.5.1-pages-full'};
     if(path==='/api/auth/login'&&method==='POST'){
       const found=db.users.find(x=>x.username===data.username&&x.password===data.password&&x.status==='ACTIVE');
       if(!found)throw new Error('Sai tài khoản hoặc mật khẩu demo.');
@@ -243,6 +247,40 @@
     if(m&&method==='POST'){const r=db.research.find(x=>x.id===m[1]);r.milestones.push({id:uid('ms'),title:data.title,dueDate:data.dueDate||'',note:data.note||'',status:'TODO'});save();return {ok:true}}
     m=path.match(/^\/api\/milestones\/([^/]+)\/status$/);
     if(m&&method==='POST'){for(const r of db.research){const x=(r.milestones||[]).find(y=>y.id===m[1]);if(x){x.status=data.status;save();return x}}throw new Error('Không tìm thấy mốc.')}
+
+
+    if(path==='/api/form-templates'&&method==='GET')return clone(db.formTemplates||[]);
+    if(path==='/api/form-templates'&&method==='POST'){
+      let x=data.id&&(db.formTemplates||[]).find(t=>t.id===data.id);
+      if(x){Object.assign(x,clone(data),{updatedAt:now()});}
+      else{x={id:uid('ftpl'),code:String(data.code||'FORM').toUpperCase(),name:String(data.name||'Biểu mẫu'),version:String(data.version||'1.0.0'),status:String(data.status||'DRAFT'),knowledgeIds:data.knowledgeIds||[],legalBasis:data.legalBasis||[],fields:data.fields||[],signaturePolicy:data.signaturePolicy||{required:true,minimumSignatures:3,requiredApprovalLevels:[2,3,4],allowedRoles:['APPROVER_LEVEL_2','APPROVER_LEVEL_3','APPROVER_LEVEL_4','SYSTEM_ADMIN']},generatedByAI:!!data.generatedByAI,createdAt:now(),updatedAt:now()};db.formTemplates.unshift(x)}
+      audit('FORM_TEMPLATE_SAVE','FORM_TEMPLATE',x.id,{version:x.version,status:x.status,generatedByAI:!!x.generatedByAI});save();return clone(x);
+    }
+    if(path==='/api/form-instances'&&method==='GET'){
+      const rows=(db.formInstances||[]).filter(x=>hasPerm(u,'research.read.all')||x.createdBy===u.id||hasPerm(u,'research.approve.level2')||hasPerm(u,'research.approve.level3')||hasPerm(u,'research.approve.level4'));
+      return clone(rows.map(x=>({...x,template:(db.formTemplates||[]).find(t=>t.id===x.templateId)||null,createdByUser:user(x.createdBy)})));
+    }
+    if(path==='/api/form-instances'&&method==='POST'){
+      let x=data.id&&(db.formInstances||[]).find(i=>i.id===data.id);
+      if(x){
+        const before=JSON.stringify(x.values||{}), after=JSON.stringify(data.values||x.values||{});
+        if(before!==after){x.documentVersion=(x.documentVersion||1)+1;if((x.signatures||[]).length){x.signatures=[];x.status='DRAFT';}}
+        x.values=clone(data.values||x.values||{});x.status=String(data.status||x.status||'DRAFT');if(x.status==='SUBMITTED' && !(x.signatures||[]).length)x.status='PENDING_LEVEL_2_SIGNATURE';x.updatedAt=now();
+      }else{
+        const tpl=(db.formTemplates||[]).find(t=>t.id===data.templateId);if(!tpl)throw new Error('Không tìm thấy biểu mẫu.');
+        x={id:uid('finst'),templateId:tpl.id,templateVersion:tpl.version,documentVersion:1,title:String(data.title||tpl.name),values:clone(data.values||{}),status:String(data.status||'DRAFT'),createdBy:u.id,organizationId:u.organizationId||null,signatures:[],createdAt:now(),updatedAt:now()};db.formInstances.unshift(x);
+      }
+      audit('FORM_INSTANCE_SAVE','FORM_INSTANCE',x.id,{status:x.status,templateId:x.templateId});save();return clone(x);
+    }
+    m=path.match(/^\/api\/form-instances\/([^/]+)$/);
+    if(m&&method==='GET'){const x=(db.formInstances||[]).find(i=>i.id===m[1]);if(!x)throw new Error('Không tìm thấy dữ liệu biểu mẫu.');return clone({...x,template:(db.formTemplates||[]).find(t=>t.id===x.templateId)||null,createdByUser:user(x.createdBy)});}
+    m=path.match(/^\/api\/form-instances\/([^/]+)\/signatures$/);
+    if(m&&method==='POST'){
+      const x=(db.formInstances||[]).find(i=>i.id===m[1]);if(!x)throw new Error('Không tìm thấy dữ liệu biểu mẫu.');
+      const roles=data.signerRoles||[];const allowed=roles.some(r=>['APPROVER_LEVEL_2','APPROVER_LEVEL_3','APPROVER_LEVEL_4','SYSTEM_ADMIN'].includes(r));if(!allowed)throw new Error('Vai trò hiện tại không được phép ký số biểu mẫu.');
+      x.signatures=x.signatures||[];const required=x.templateId?(db.formTemplates||[]).find(t=>t.id===x.templateId)?.signaturePolicy?.requiredApprovalLevels||[2,3,4]:[2,3,4];const done=x.signatures.map(s=>Number(s.approvalLevel)).filter(Boolean);const next=required.find(l=>!done.includes(l));let level=Number(data.approvalLevel)||0;if(roles.includes('SYSTEM_ADMIN')&&!level)level=next||4;if(!level){if(roles.includes('APPROVER_LEVEL_2'))level=2;else if(roles.includes('APPROVER_LEVEL_3'))level=3;else if(roles.includes('APPROVER_LEVEL_4'))level=4;}if(next&&level!==next)throw new Error(`Biểu mẫu đang chờ chữ ký kiểm duyệt cấp ${next}.`);if(done.includes(level))throw new Error(`Cấp ${level} đã ký biểu mẫu này.`);
+      x.signatures.push({...clone(data),approvalLevel:level,id:uid('sig'),signerId:u.id,signerName:u.displayName,signedAt:data.signedAt||now()});const nowDone=x.signatures.map(s=>Number(s.approvalLevel)).filter(Boolean);const remain=required.find(l=>!nowDone.includes(l));x.status=remain?`PENDING_LEVEL_${remain}_SIGNATURE`:'FULLY_SIGNED';x.updatedAt=now();audit('FORM_DIGITAL_SIGN','FORM_INSTANCE',x.id,{signatureCount:x.signatures.length,approvalLevel:level,adapterId:data.adapterId,providerType:data.providerType,verificationStatus:data.verificationStatus});save();return clone(x);
+    }
 
     if(path==='/api/audit')return clone(db.audit);
     throw new Error(`Mock API chưa hỗ trợ: ${method} ${path}`);
