@@ -2,7 +2,7 @@
   'use strict';
 
   const KEY='nute-ris-v60-ai-activity-state';
-  const VERSION='6.0.0';
+  const VERSION='6.0.1';
   const now=()=>new Date().toISOString();
   const uid=(p='id')=>`${p}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2,8)}`;
   const clone=x=>JSON.parse(JSON.stringify(x));
@@ -35,8 +35,15 @@
 
   function safeJson(text){
     const raw=String(text||'').trim();
-    const candidates=[raw,raw.replace(/^```(?:json)?\s*/i,'').replace(/```$/,'').trim()];
-    const m=raw.match(/\{[\s\S]*\}/);if(m)candidates.push(m[0]);
+    const candidates=[raw,raw.replace(/^```(?:json)?\s*/i,'').replace(/```\s*$/,'').trim()];
+    let start=-1,depth=0,inString=false,escape=false;
+    for(let i=0;i<raw.length;i++){
+      const ch=raw[i];
+      if(inString){if(escape)escape=false;else if(ch==='\\')escape=true;else if(ch==='"')inString=false;continue}
+      if(ch==='"'){inString=true;continue}
+      if(ch==='{'){if(depth===0)start=i;depth++}
+      else if(ch==='}'&&depth>0){depth--;if(depth===0&&start>=0){candidates.push(raw.slice(start,i+1));break}}
+    }
     for(const x of candidates){try{return JSON.parse(x)}catch{}}
     return null;
   }
@@ -107,8 +114,9 @@
     }
   }
   function recordHumanDecision(recommendationId,{outcome,rationale='',actorId=''}={}){const s=load();const rec=s.recommendations.find(x=>x.id===recommendationId);if(!rec)return null;const d={id:uid('aihd'),recommendationId,outcome:String(outcome||'REVIEWED'),rationale:String(rationale||''),actorId:String(actorId||''),createdAt:now()};s.decisions.unshift(d);s.audit.unshift({id:uid('aia'),kind:'HUMAN_AI_DECISION',recommendationId,outcome:d.outcome,createdAt:d.createdAt});save(s);return clone(d)}
-  function summary(){const s=load();return {version:s.version,policies:clone(s.policies),events:clone(s.events),analyses:clone(s.analyses),recommendations:clone(s.recommendations),decisions:clone(s.decisions),counts:{events:s.events.length,analyzed:s.analyses.length,awaitingHuman:s.recommendations.filter(r=>r.structured?.requiresHumanDecision&&!s.decisions.some(d=>d.recommendationId===r.id)).length,failed:s.events.filter(e=>e.status==='FAILED').length}}}
+  function summary(){const s=load();const latest=s.recommendations[0]||null;return {version:s.version,policies:clone(s.policies),events:clone(s.events),analyses:clone(s.analyses),recommendations:clone(s.recommendations),decisions:clone(s.decisions),providerStatus:latest?clone(latest.provider):null,counts:{events:s.events.length,analyzed:s.analyses.length,awaitingHuman:s.recommendations.filter(r=>r.structured?.requiresHumanDecision&&!s.decisions.some(d=>d.recommendationId===r.id)).length,failed:s.events.filter(e=>e.status==='FAILED').length}}}
   function reset(){localStorage.removeItem(KEY);return summary()}
   function api(){return {version:VERSION,configure,observe,policy,updatePolicy,summary,recordHumanDecision,reset,state}}
   window.NuteAIActivity=api();
+  window.NuteAIActivityOrchestrator=window.NuteAIActivity;
 })();

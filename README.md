@@ -1,4 +1,4 @@
-# NUTE RIS GitHub Pages V6.0
+# NUTE RIS GitHub Pages V6.0.1
 
 > Continuous AI Activity Orchestration — Phase 1. AI tự quan sát và phân tích 7 decision point quan trọng; Human + AI governance vẫn giữ quyền quyết định có thẩm quyền cho con người.
 
