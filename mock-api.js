@@ -83,10 +83,10 @@
     };
     const scientificProfiles={};
     const aiCenter={autopilot:false,workItems:[{id:'wi-1',status:'PENDING',decisionPoint:'APPROVAL_LEVEL_2',label:'Phân tích hồ sơ trước duyệt cấp 2',researchId:'r-001',createdAt:'2026-09-20T08:00:00Z'}],recommendations:[{id:'rec-1',decisionPoint:'EVIDENCE_REVIEW',researchId:'r-002',createdAt:'2026-09-19T09:00:00Z',structured:{summary:'Minh chứng đăng ký đã có nhưng cần xác minh nguồn liên kết trước khi chuyển bước.'}}],decisions:[]};
-    const audit=[{id:'a-1',at:'2026-09-20T08:20:00Z',actorId:'u-admin',action:'DEMO_READY',entityType:'SYSTEM',entityId:'V5.5.1',details:{mode:'GitHub Pages full test + AI Form Studio + pluggable digital signature capability/adapters'}}];
+    const audit=[{id:'a-1',at:'2026-09-20T08:20:00Z',actorId:'u-admin',action:'DEMO_READY',entityType:'SYSTEM',entityId:'V6.0',details:{mode:'GitHub Pages full test + AI Form Studio + pluggable digital signature capability/adapters'}}];
     const formTemplates=[{id:'form-tpl-001',code:'RESEARCH_REGISTRATION',name:'Phiếu đăng ký đề tài NCKH',version:'1.0.0',status:'PUBLISHED',knowledgeIds:['k-1'],legalBasis:[{knowledgeId:'k-1',title:'Quy định quản lý hoạt động nghiên cứu khoa học',citation:'Quy định demo - phần đăng ký'}],fields:[{id:'f-title',code:'TITLE',label:'Tên đề tài',type:'text',required:true,citation:'Quy định demo - đăng ký'},{id:'f-owner',code:'OWNER',label:'Chủ nhiệm đề tài',type:'text',required:true,citation:'Quy định demo - đăng ký'},{id:'f-org',code:'ORGANIZATION',label:'Đơn vị chủ trì',type:'text',required:true,citation:'Quy định demo - đăng ký'},{id:'f-objectives',code:'OBJECTIVES',label:'Mục tiêu nghiên cứu',type:'textarea',required:true,citation:'Quy định demo - thuyết minh'},{id:'f-method',code:'METHOD',label:'Phương pháp nghiên cứu',type:'textarea',required:true,citation:'Quy định demo - thuyết minh'},{id:'f-products',code:'PRODUCTS',label:'Sản phẩm dự kiến',type:'textarea',required:true,citation:'Quy định demo - kết quả'}],signaturePolicy:{required:true,minimumSignatures:3,requiredApprovalLevels:[2,3,4],allowedRoles:['APPROVER_LEVEL_2','APPROVER_LEVEL_3','APPROVER_LEVEL_4','SYSTEM_ADMIN']},createdAt:now(),updatedAt:now(),generatedByAI:true}];
     const formInstances=[];
-    return {version:'5.5.1-pages-full',orgs,roles,users,personnel,types,workflows,research,knowledge,providers,researcherProfiles,scientificProfiles,aiCenter,formTemplates,formInstances,audit};
+    return {version:'6.0.0-pages-ai-activity',orgs,roles,users,personnel,types,workflows,research,knowledge,providers,researcherProfiles,scientificProfiles,aiCenter,formTemplates,formInstances,audit};
   }
 
   function load(){try{const x=JSON.parse(localStorage.getItem(KEY)||'null');return x&&x.version?x:initialState()}catch{return initialState()}}
@@ -118,7 +118,7 @@
     await new Promise(r=>setTimeout(r,20));
     const u=currentUser();
     const url=new URL(rawUrl,location.origin); const path=url.pathname; const method=(opts.method||'GET').toUpperCase(); const data=body(opts);
-    if(path==='/api/bootstrap/status')return {initialized:true,version:'5.5.1-pages-full'};
+    if(path==='/api/bootstrap/status')return {initialized:true,version:'6.0.0-pages-ai-activity'};
     if(path==='/api/auth/login'&&method==='POST'){
       const found=db.users.find(x=>x.username===data.username&&x.password===data.password&&x.status==='ACTIVE');
       if(!found)throw new Error('Sai tài khoản hoặc mật khẩu demo.');
@@ -160,7 +160,7 @@
     m=path.match(/^\/api\/research-documents\/([^/]+)$/);
     if(m&&method==='DELETE'){for(const r of db.research)r.documents=(r.documents||[]).filter(d=>d.id!==m[1]);audit('DOCUMENT_DELETE','DOCUMENT',m[1]);save();return {ok:true}}
     m=path.match(/^\/api\/evidence\/([^/]+)\/verify$/);
-    if(m&&method==='POST'){for(const r of db.research){const e=(r.evidence||[]).find(x=>x.id===m[1]);if(e){e.status=data.approved?'VERIFIED':'REJECTED';e.verificationNote=data.note||'';audit('EVIDENCE_VERIFY','EVIDENCE',e.id,{approved:data.approved});save();return e}}throw new Error('Không tìm thấy minh chứng.')}
+    if(m&&method==='POST'){for(const r of db.research){const e=(r.evidence||[]).find(x=>x.id===m[1]);if(e){e.status=data.approved?'VERIFIED':'REJECTED';e.verificationNote=data.note||'';audit('EVIDENCE_VERIFY','EVIDENCE',e.id,{approved:data.approved});save();return {...e,researchId:r.id}}}throw new Error('Không tìm thấy minh chứng.')}
     m=path.match(/^\/api\/evidence\/([^/]+)$/);
     if(m&&method==='DELETE'){for(const r of db.research)r.evidence=(r.evidence||[]).filter(e=>e.id!==m[1]);audit('EVIDENCE_DELETE','EVIDENCE',m[1]);save();return {ok:true}}
 
@@ -208,7 +208,7 @@
     m=path.match(/^\/api\/ai\/work-items\/([^/]+)\/process$/);
     if(m&&method==='POST'){const w=db.aiCenter.workItems.find(x=>x.id===m[1]);if(!w)throw new Error('Không tìm thấy work item.');w.status='ANALYZED';db.aiCenter.recommendations.unshift({id:uid('rec'),decisionPoint:w.decisionPoint,researchId:w.researchId,createdAt:now(),structured:{summary:'AI demo đã phân tích điểm quyết định: hồ sơ có cấu trúc phù hợp để người có thẩm quyền xem xét; cần xác minh minh chứng và căn cứ quy định trước khi quyết định.'}});audit('AI_WORK_ITEM_PROCESS','AI_WORK_ITEM',w.id);save();return {ok:true}}
     m=path.match(/^\/api\/ai\/recommendations\/([^/]+)\/decision$/);
-    if(m&&method==='POST'){db.aiCenter.decisions.unshift({id:uid('aid'),recommendationId:m[1],outcome:data.outcome,rationale:data.rationale,createdAt:now(),actorId:u.id});audit('HUMAN_AI_DECISION','AI_RECOMMENDATION',m[1],{outcome:data.outcome});save();return {ok:true}}
+    if(m&&method==='POST'){const v6=window.NuteAIActivity?.recordHumanDecision?.(m[1],{outcome:data.outcome,rationale:data.rationale,actorId:u.id});if(v6){audit('HUMAN_AI_DECISION','AI_RECOMMENDATION',m[1],{outcome:data.outcome,source:'V6_AI_ACTIVITY'});save();return {ok:true,decision:v6}}db.aiCenter.decisions.unshift({id:uid('aid'),recommendationId:m[1],outcome:data.outcome,rationale:data.rationale,createdAt:now(),actorId:u.id});audit('HUMAN_AI_DECISION','AI_RECOMMENDATION',m[1],{outcome:data.outcome});save();return {ok:true}}
     if(path==='/api/ai/portfolio/analyze'&&method==='POST')return {result:'AI demo: Danh mục hiện có nhiều hồ sơ ở giai đoạn phê duyệt và triển khai. Nên ưu tiên xử lý hồ sơ đang chờ duyệt, chuẩn hóa minh chứng và theo dõi các mốc quá hạn. Đây là phân tích hỗ trợ, không phải quyết định quản trị.'};
 
     if(path==='/api/intelligence/portfolio'){
@@ -291,6 +291,6 @@
   window.demoExportScientificProfile=function(target){
     const u=target==='me'?currentUser():user(target);if(!u){alert('Không tìm thấy hồ sơ.');return}const p=scientificProfileFor(u.id);const w=window.open('','_blank');if(!w)return;
     const rs=p.systemSnapshot?.research||[];
-    w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Lý lịch khoa học - ${u.displayName}</title><style>body{font-family:Arial,sans-serif;max-width:850px;margin:40px auto;line-height:1.5;color:#111}h1,h2{color:#123a78}table{width:100%;border-collapse:collapse}td,th{border:1px solid #bbb;padding:8px;text-align:left}.muted{color:#666}@media print{button{display:none}}</style></head><body><button onclick="print()">In / Lưu PDF</button><h1>LÝ LỊCH KHOA HỌC</h1><p><b>Họ tên:</b> ${u.displayName}</p><p><b>Đơn vị:</b> ${org(u.organizationId)?.name||''}</p><p><b>ORCID:</b> ${p.orcid||''}</p><p><b>Học hàm:</b> ${p.academicTitle||''} &nbsp; <b>Học vị:</b> ${p.degree||''}</p><p><b>Lĩnh vực:</b> ${(p.expertise||[]).join(', ')}</p><h2>Hoạt động nghiên cứu trong RIS</h2><table><tr><th>Tên hoạt động</th><th>Loại</th><th>Trạng thái</th></tr>${rs.map(r=>`<tr><td>${r.title}</td><td>${r.type}</td><td>${r.status}</td></tr>`).join('')}</table><p class="muted">Bản xuất từ môi trường GitHub Pages Test V5.4.2.</p></body></html>`);w.document.close();
+    w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>Lý lịch khoa học - ${u.displayName}</title><style>body{font-family:Arial,sans-serif;max-width:850px;margin:40px auto;line-height:1.5;color:#111}h1,h2{color:#123a78}table{width:100%;border-collapse:collapse}td,th{border:1px solid #bbb;padding:8px;text-align:left}.muted{color:#666}@media print{button{display:none}}</style></head><body><button onclick="print()">In / Lưu PDF</button><h1>LÝ LỊCH KHOA HỌC</h1><p><b>Họ tên:</b> ${u.displayName}</p><p><b>Đơn vị:</b> ${org(u.organizationId)?.name||''}</p><p><b>ORCID:</b> ${p.orcid||''}</p><p><b>Học hàm:</b> ${p.academicTitle||''} &nbsp; <b>Học vị:</b> ${p.degree||''}</p><p><b>Lĩnh vực:</b> ${(p.expertise||[]).join(', ')}</p><h2>Hoạt động nghiên cứu trong RIS</h2><table><tr><th>Tên hoạt động</th><th>Loại</th><th>Trạng thái</th></tr>${rs.map(r=>`<tr><td>${r.title}</td><td>${r.type}</td><td>${r.status}</td></tr>`).join('')}</table><p class="muted">Bản xuất từ môi trường NUTE RIS V6.0 GitHub Pages Test.</p></body></html>`);w.document.close();
   };
 })();

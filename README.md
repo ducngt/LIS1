@@ -1,6 +1,10 @@
-# NUTE AI-Native Research Intelligence System — GitHub Test V5.5.1
+# NUTE RIS GitHub Pages V6.0
 
-Bản V5.5.1 kế thừa đầy đủ V5.5 và bổ sung Digital Signature Capability/Adapter độc lập theo SBBS.
+> Continuous AI Activity Orchestration — Phase 1. AI tự quan sát và phân tích 7 decision point quan trọng; Human + AI governance vẫn giữ quyền quyết định có thẩm quyền cho con người.
+
+## Kế thừa từ V5.5.1
+
+V6.0 giữ nguyên AI Form Studio và Digital Signature Capability/Adapter của V5.5.1, đồng thời bổ sung Continuous AI Activity Orchestration Phase 1.
 
 ## Tài khoản demo
 - `admin / admin123`
