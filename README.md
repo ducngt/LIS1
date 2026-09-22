@@ -1,3 +1,7 @@
+# NUTE RIS V7.1 — Domain Workspaces
+
+V7.1 adds role/scoped workspaces on top of the V7.0 Agentic runtime. See `ARCHITECTURE-V7.1-DOMAIN-WORKSPACES.md` and `RELEASE-NOTES-V7.1.md`.
+
 # NUTE Research Intelligence System — V7.0 Agentic Research Intelligence System
 
 Bản GitHub Pages V7.0 kế thừa V6.0.3 Real AI Unified Router và bổ sung kiến trúc Agentic AI cho toàn bộ RIS.

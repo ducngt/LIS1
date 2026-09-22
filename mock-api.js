@@ -106,7 +106,9 @@
   function getWorkflowFor(r){return db.workflows.find(w=>w.researchTypeId===r.typeId)||db.workflows[0]}
   function transitionInfo(r,u){const wf=getWorkflowFor(r);return (wf?.transitions||[]).filter(t=>t.from===r.status).map(t=>({...clone(t),allowed:!t.permission||hasPerm(u,t.permission)||(u?.id===r.ownerId&&t.permission==='research.submit'),reason:''}))}
   function normalizeDocs(files=[],purpose='SUPPORTING'){return (files||[]).map((f,i)=>({id:uid('doc'),title:f.name||`Tài liệu ${i+1}`,originalName:f.name||`tai-lieu-${i+1}.pdf`,purpose,extractionStatus:'EXTRACTED',extractedPreview:'Nội dung tài liệu demo đã được ghi nhận để kiểm thử giao diện và luồng AI.',createdAt:now(),fileUrl:'#'}))}
-  function researchSummary(){return db.research.map(researchDecorated)}
+  function visibleResearch(u){if(!u)return[];const roles=u.roles||[];if(roles.includes('SYSTEM_ADMIN')||roles.includes('APPROVER_LEVEL_3')||roles.includes('APPROVER_LEVEL_4')||roles.some(r=>['EXECUTIVE','RESEARCH_EXECUTIVE','RECTOR','VICE_RECTOR'].includes(r)))return db.research;if(roles.includes('APPROVER_LEVEL_2'))return db.research.filter(r=>r.organizationId===u.organizationId);if(roles.includes('RESEARCH_PARTICIPANT'))return db.research.filter(r=>r.ownerId===u.id);return db.research.filter(r=>r.ownerId===u.id)}
+  function canReadResearch(u,r){return visibleResearch(u).some(x=>x.id===r.id)}
+  function researchSummary(u=currentUser()){return visibleResearch(u).map(researchDecorated)}
 
   function scientificProfileFor(uidx){
     const u=user(uidx); const p=db.personnel.find(x=>x.userId===uidx); const rp=db.researcherProfiles[uidx]||{}; const rs=db.research.filter(r=>r.ownerId===uidx);
@@ -118,7 +120,7 @@
     await new Promise(r=>setTimeout(r,20));
     const u=currentUser();
     const url=new URL(rawUrl,location.origin); const path=url.pathname; const method=(opts.method||'GET').toUpperCase(); const data=body(opts);
-    if(path==='/api/bootstrap/status')return {initialized:true,version:'7.0.0-agentic-pages'};
+    if(path==='/api/bootstrap/status')return {initialized:true,version:'7.1.0-domain-workspaces'};
     if(path==='/api/auth/login'&&method==='POST'){
       const found=db.users.find(x=>x.username===data.username&&x.password===data.password&&x.status==='ACTIVE');
       if(!found)throw new Error('Sai tài khoản hoặc mật khẩu demo.');
@@ -140,7 +142,7 @@
     }
     let m=path.match(/^\/api\/research\/([^/]+)$/);
     if(m&&method==='GET'){
-      const r=db.research.find(x=>x.id===m[1]);if(!r)throw new Error('Không tìm thấy hồ sơ.');return {...researchDecorated(r),availableTransitions:transitionInfo(r,u)};
+      const r=db.research.find(x=>x.id===m[1]);if(!r||!canReadResearch(u,r))throw new Error('Không tìm thấy hồ sơ hoặc ngoài phạm vi workspace.');return {...researchDecorated(r),availableTransitions:transitionInfo(r,u)};
     }
     m=path.match(/^\/api\/research\/([^/]+)\/transition-advice$/);
     if(m&&method==='POST')throw new Error('V7.0: transition advice phải đi qua Real AI Router.');
@@ -212,11 +214,11 @@
     if(path==='/api/ai/portfolio/analyze'&&method==='POST')throw new Error('V7.0: portfolio analysis mô phỏng đã bị vô hiệu hóa; cần provider AI thật.');
 
     if(path==='/api/intelligence/portfolio'){
-      const byStatus={};for(const r of db.research)byStatus[r.status]=(byStatus[r.status]||0)+1;
-      return {total:db.research.length,stale:db.research.filter(r=>Date.now()-new Date(r.updatedAt).getTime()>45*864e5),possibleDuplicates:[{a:db.research[0]?.title||'',b:db.research[1]?.title||'',score:.71}],pendingAI:db.aiCenter.workItems.filter(w=>w.status==='PENDING').length,byStatus};
+      const scoped=visibleResearch(u);const byStatus={};for(const r of scoped)byStatus[r.status]=(byStatus[r.status]||0)+1;
+      return {total:scoped.length,stale:scoped.filter(r=>Date.now()-new Date(r.updatedAt).getTime()>45*864e5),possibleDuplicates:scoped.length>1?[{a:scoped[0]?.title||'',b:scoped[1]?.title||'',score:.71}]:[],pendingAI:db.aiCenter.workItems.filter(w=>w.status==='PENDING').length,byStatus,scope:((u.roles||[]).includes('APPROVER_LEVEL_2')?'ORGANIZATION':(u.roles||[]).includes('RESEARCH_PARTICIPANT')?'SELF':'INSTITUTION')};
     }
     if(path==='/api/intelligence/search'){
-      const q=(url.searchParams.get('q')||'').toLowerCase();return db.research.map(r=>({research:researchDecorated(r),score:(r.title+' '+r.summary).toLowerCase().includes(q)?.94:.54})).filter(x=>x.score>.5).sort((a,b)=>b.score-a.score);
+      const q=(url.searchParams.get('q')||'').toLowerCase();return visibleResearch(u).map(r=>({research:researchDecorated(r),score:(r.title+' '+r.summary).toLowerCase().includes(q)?.94:.54})).filter(x=>x.score>.5).sort((a,b)=>b.score-a.score);
     }
     m=path.match(/^\/api\/intelligence\/research\/([^/]+)\/similar$/);
     if(m)return db.research.filter(r=>r.id!==m[1]).slice(0,3).map((r,i)=>({research:researchDecorated(r),score:.82-i*.09}));
