@@ -2,7 +2,7 @@
   'use strict';
 
   const KEY='nute-ris-v60-ai-activity-state';
-  const VERSION='6.0.1';
+  const VERSION='6.0.2';
   const now=()=>new Date().toISOString();
   const uid=(p='id')=>`${p}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2,8)}`;
   const clone=x=>JSON.parse(JSON.stringify(x));

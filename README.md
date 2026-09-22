@@ -1,3 +1,7 @@
+# NUTE RIS V6.0.3 — Real AI Unified Router
+
+Hotfix hợp nhất AI Model Registry với AI Research Copilot/Continuous AI. Các nút mang nhãn AI thật không còn rơi xuống gpt-demo/OpenAI Demo. API key chỉ ở sessionStorage.
+
 # NUTE RIS GitHub Pages V6.0.1
 
 > Continuous AI Activity Orchestration — Phase 1. AI tự quan sát và phân tích 7 decision point quan trọng; Human + AI governance vẫn giữ quyền quyết định có thẩm quyền cho con người.
@@ -24,3 +28,7 @@ V6.0 giữ nguyên AI Form Studio và Digital Signature Capability/Adapter của
 
 ## Lưu ý
 `Government Specialized CA Adapter` là adapter production-ready về mặt contract nhưng trên GitHub Pages cần một **Signature Bridge/PKI service** để thực sự truy cập USB Token/remote signing và xác minh chain/OCSP/CRL. Không lưu private key trong trình duyệt/RIS.
+
+
+## V6.0.2 Registry hotfix
+AI Model Registry tests providers directly from the browser. API keys are session-only and are never persisted to repository/localStorage.

@@ -74,8 +74,8 @@
       {id:'k-1',kind:'regulation',scope:'all',title:'Quy định quản lý hoạt động nghiên cứu khoa học',content:'Quy định demo dùng để kiểm thử khả năng đọc quy chế và gắn với workflow.',contentPreview:'Quy định về đăng ký, phê duyệt, thực hiện, hội đồng và công nhận...',sourceDocuments:[{id:'kdoc-1',originalName:'quy-dinh-khcn.pdf',fileUrl:'#',extractionStatus:'EXTRACTED',hasExtractedText:true}],aiAnalysis:null}
     ];
     const providers=[
-      {id:'ai-1',name:'OpenAI Demo',kind:'openai',model:'gpt-demo',enabled:true,primary:true,priority:10,routes:['*'],hasApiKey:true,capabilities:{chat:true,streaming:true,temperature:true,vision:true,jsonMode:true,reasoning:true,toolCalling:true,embeddings:false},generation:{useTemperature:false,temperature:0.2,useMaxTokens:true,maxTokens:1800}},
-      {id:'ai-2',name:'Gemini Demo',kind:'gemini',model:'gemini-demo',enabled:true,primary:false,priority:20,routes:['academic','general'],hasApiKey:true,capabilities:{chat:true,streaming:true,temperature:true,vision:true,jsonMode:true,reasoning:false,toolCalling:true,embeddings:false},generation:{useTemperature:true,temperature:0.2,useMaxTokens:false,maxTokens:1800}}
+      {id:'ai-1',name:'OpenAI Demo (legacy disabled)',kind:'openai',model:'gpt-demo',enabled:false,primary:false,priority:900,routes:['*'],hasApiKey:false,capabilities:{chat:true,streaming:true,temperature:true,vision:true,jsonMode:true,reasoning:true,toolCalling:true,embeddings:false},generation:{useTemperature:false,temperature:0.2,useMaxTokens:true,maxTokens:1800}},
+      {id:'ai-2',name:'Gemini Demo (legacy disabled)',kind:'gemini',model:'gemini-demo',enabled:false,primary:false,priority:910,routes:['academic','general'],hasApiKey:false,capabilities:{chat:true,streaming:true,temperature:true,vision:true,jsonMode:true,reasoning:false,toolCalling:true,embeddings:false},generation:{useTemperature:true,temperature:0.2,useMaxTokens:false,maxTokens:1800}}
     ];
     const researcherProfiles={
       'u-admin':{userId:'u-admin',organizationId:'org-nute',orcid:'',expertise:['Quản trị nghiên cứu','Hệ thống thông tin'],keywords:['RIS','AI-native','SBBS'],bio:'Hồ sơ demo quản trị.'},
@@ -86,7 +86,7 @@
     const audit=[{id:'a-1',at:'2026-09-20T08:20:00Z',actorId:'u-admin',action:'DEMO_READY',entityType:'SYSTEM',entityId:'V6.0',details:{mode:'GitHub Pages full test + AI Form Studio + pluggable digital signature capability/adapters'}}];
     const formTemplates=[{id:'form-tpl-001',code:'RESEARCH_REGISTRATION',name:'Phiếu đăng ký đề tài NCKH',version:'1.0.0',status:'PUBLISHED',knowledgeIds:['k-1'],legalBasis:[{knowledgeId:'k-1',title:'Quy định quản lý hoạt động nghiên cứu khoa học',citation:'Quy định demo - phần đăng ký'}],fields:[{id:'f-title',code:'TITLE',label:'Tên đề tài',type:'text',required:true,citation:'Quy định demo - đăng ký'},{id:'f-owner',code:'OWNER',label:'Chủ nhiệm đề tài',type:'text',required:true,citation:'Quy định demo - đăng ký'},{id:'f-org',code:'ORGANIZATION',label:'Đơn vị chủ trì',type:'text',required:true,citation:'Quy định demo - đăng ký'},{id:'f-objectives',code:'OBJECTIVES',label:'Mục tiêu nghiên cứu',type:'textarea',required:true,citation:'Quy định demo - thuyết minh'},{id:'f-method',code:'METHOD',label:'Phương pháp nghiên cứu',type:'textarea',required:true,citation:'Quy định demo - thuyết minh'},{id:'f-products',code:'PRODUCTS',label:'Sản phẩm dự kiến',type:'textarea',required:true,citation:'Quy định demo - kết quả'}],signaturePolicy:{required:true,minimumSignatures:3,requiredApprovalLevels:[2,3,4],allowedRoles:['APPROVER_LEVEL_2','APPROVER_LEVEL_3','APPROVER_LEVEL_4','SYSTEM_ADMIN']},createdAt:now(),updatedAt:now(),generatedByAI:true}];
     const formInstances=[];
-    return {version:'6.0.0-pages-ai-activity',orgs,roles,users,personnel,types,workflows,research,knowledge,providers,researcherProfiles,scientificProfiles,aiCenter,formTemplates,formInstances,audit};
+    return {version:'6.0.3-pages-real-ai-router',orgs,roles,users,personnel,types,workflows,research,knowledge,providers,researcherProfiles,scientificProfiles,aiCenter,formTemplates,formInstances,audit};
   }
 
   function load(){try{const x=JSON.parse(localStorage.getItem(KEY)||'null');return x&&x.version?x:initialState()}catch{return initialState()}}
@@ -118,7 +118,7 @@
     await new Promise(r=>setTimeout(r,20));
     const u=currentUser();
     const url=new URL(rawUrl,location.origin); const path=url.pathname; const method=(opts.method||'GET').toUpperCase(); const data=body(opts);
-    if(path==='/api/bootstrap/status')return {initialized:true,version:'6.0.0-pages-ai-activity'};
+    if(path==='/api/bootstrap/status')return {initialized:true,version:'6.0.2-pages-ai-activity'};
     if(path==='/api/auth/login'&&method==='POST'){
       const found=db.users.find(x=>x.username===data.username&&x.password===data.password&&x.status==='ACTIVE');
       if(!found)throw new Error('Sai tài khoản hoặc mật khẩu demo.');
@@ -143,7 +143,7 @@
       const r=db.research.find(x=>x.id===m[1]);if(!r)throw new Error('Không tìm thấy hồ sơ.');return {...researchDecorated(r),availableTransitions:transitionInfo(r,u)};
     }
     m=path.match(/^\/api\/research\/([^/]+)\/transition-advice$/);
-    if(m&&method==='POST')return {id:uid('advice'),result:`AI demo đã rà soát hồ sơ cho bước ${data.to}.\n\nGợi ý kiểm tra: tính đầy đủ minh chứng, sự nhất quán giữa mục tiêu-phương pháp-sản phẩm và căn cứ quy định.\n\nQuyết định cuối cùng thuộc người có thẩm quyền.`,providerName:'OpenAI Demo',model:'gpt-demo'};
+    if(m&&method==='POST')throw new Error('V6.0.3: transition advice phải đi qua Real AI Router.');
     m=path.match(/^\/api\/research\/([^/]+)\/transition$/);
     if(m&&method==='POST'){
       const r=db.research.find(x=>x.id===m[1]);if(!r)throw new Error('Không tìm thấy hồ sơ.'); const from=r.status; const t=transitionInfo(r,u).find(x=>x.to===data.to);if(!t||!t.allowed)throw new Error('Tài khoản demo không có quyền thực hiện bước này.');
@@ -181,23 +181,23 @@
     if(path==='/api/workflows'&&method==='GET')return clone(db.workflows);
     if(path==='/api/workflows'&&method==='POST'){let x=db.workflows.find(w=>w.researchTypeId===data.researchTypeId);const newDocs=normalizeDocs(data.sourceFiles||[],'WORKFLOW').map(d=>({id:d.id,originalName:d.originalName,fileUrl:'#',extractionStatus:'EXTRACTED',hasExtractedText:true}));if(x){x.name=data.name||x.name;x.initialStatus=data.initialStatus||'DRAFT';x.transitions=data.transitions||[];x.sourceDocuments=[...(x.sourceDocuments||[]),...newDocs]}else{x={id:uid('wf'),researchTypeId:data.researchTypeId,name:data.name||'Quy trình',initialStatus:data.initialStatus||'DRAFT',transitions:data.transitions||[],sourceDocuments:newDocs};db.workflows.push(x)}audit('WORKFLOW_SAVE','WORKFLOW',x.id);save();return x}
     m=path.match(/^\/api\/workflows\/([^/]+)\/analyze$/);
-    if(m&&method==='POST')return {result:'AI demo: Quy trình đã được đọc. Các bước phê duyệt 4 cấp, nhánh trả lại/chỉnh sửa và các điểm Human + AI được nhận diện. Cần kiểm tra tính nhất quán giữa quyền, minh chứng bắt buộc và thẩm quyền công nhận.'};
+    if(m&&method==='POST')throw new Error('V6.0.3: workflow analysis phải đi qua Real AI Router.');
     m=path.match(/^\/api\/workflows\/([^/]+)\/source-documents\/([^/]+)$/);
     if(m&&method==='DELETE'){const w=db.workflows.find(x=>x.id===m[1]);if(w)w.sourceDocuments=(w.sourceDocuments||[]).filter(d=>d.id!==m[2]&&d.storedName!==m[2]);save();return {ok:true}}
 
     if(path==='/api/knowledge'&&method==='GET')return clone(db.knowledge);
     if(path==='/api/knowledge'&&method==='POST'){let x=data.id&&db.knowledge.find(k=>k.id===data.id);const docs=normalizeDocs(data.files||[],'KNOWLEDGE').map(d=>({id:d.id,originalName:d.originalName,fileUrl:'#',extractionStatus:'EXTRACTED',hasExtractedText:true}));if(x){Object.assign(x,{title:data.title,kind:data.kind,scope:data.scope,content:data.content||x.content});x.sourceDocuments=[...(x.sourceDocuments||[]),...docs]}else{x={id:uid('k'),title:data.title,kind:data.kind,scope:data.scope||'all',content:data.content||'',contentPreview:String(data.content||'').slice(0,180),sourceDocuments:docs,aiAnalysis:null};db.knowledge.push(x)}audit('KNOWLEDGE_SAVE','KNOWLEDGE',x.id);save();return x}
     m=path.match(/^\/api\/knowledge\/([^/]+)\/analyze$/);
-    if(m&&method==='POST'){const x=db.knowledge.find(k=>k.id===m[1]);if(x)x.aiAnalysis={at:now()};save();return {result:'AI demo: Tài liệu tri thức đã được phân tích. Các nhóm quy tắc chính gồm điều kiện đăng ký, thẩm quyền phê duyệt, yêu cầu minh chứng, hội đồng và công nhận kết quả.'}}
+    if(m&&method==='POST'){const x=db.knowledge.find(k=>k.id===m[1]);if(x)x.aiAnalysis={at:now(),real:!!data.real};save();return {ok:true}}
     m=path.match(/^\/api\/knowledge\/([^/]+)\/source-documents\/([^/]+)$/);
     if(m&&method==='DELETE'){const x=db.knowledge.find(k=>k.id===m[1]);if(x)x.sourceDocuments=(x.sourceDocuments||[]).filter(d=>d.id!==m[2]&&d.storedName!==m[2]);save();return {ok:true}}
 
     if(path==='/api/ai/providers'&&method==='GET')return clone(db.providers);
     if(path==='/api/ai/providers'&&method==='POST'){let x=data.id&&db.providers.find(p=>p.id===data.id);if(x){Object.assign(x,data);x.hasApiKey=x.hasApiKey||!!data.apiKey;delete x.apiKey}else{x={...data,id:uid('ai'),hasApiKey:!!data.apiKey};delete x.apiKey;db.providers.push(x)}if(x.primary){for(const p of db.providers)if(p.id!==x.id)p.primary=false}audit('AI_PROVIDER_SAVE','AI_PROVIDER',x.id);save();return clone(x)}
-    if(path==='/api/ai/providers/models'&&method==='POST')return {count:4,models:[{id:'gpt-5.6-demo',name:'GPT 5.6 Demo'},{id:'gpt-5-mini-demo',name:'GPT 5 Mini Demo'},{id:'gemini-2.5-demo',name:'Gemini 2.5 Demo'},{id:'claude-demo',name:'Claude Demo'}]};
-    if(path==='/api/ai/providers/probe'&&method==='POST')return {reachable:true,capabilities:{chat:true,temperature:true,vision:true,jsonMode:true,reasoning:true,toolCalling:true},probes:{base:{ok:true}}};
-    if(path==='/api/ai/providers/test'&&method==='POST')return {model:data.model||db.providers.find(p=>p.id===data.id)?.model||'demo-model',response:'Kết nối mô phỏng thành công trên GitHub Pages.'};
-    if(path==='/api/ai/assist'&&method==='POST')return {result:`KẾT QUẢ AI DEMO\n\nNhiệm vụ: ${data.task||'Phân tích nghiên cứu'}\n\n1. Hồ sơ/nội dung đã được tiếp nhận trong môi trường test.\n2. Cần kiểm tra sự nhất quán giữa mục tiêu, phương pháp, sản phẩm và minh chứng.\n3. Các điểm rủi ro cần được người dùng xác minh trên tài liệu gốc.\n4. AI chỉ hỗ trợ phân tích; quyết định nghiệp vụ/khoa học cuối cùng thuộc con người.`,provider:{name:'OpenAI Demo',model:'gpt-demo'}};
+    if(path==='/api/ai/providers/models'&&method==='POST')throw new Error('V6.0.2: model discovery phải đi qua browser real-provider adapter.');
+    if(path==='/api/ai/providers/probe'&&method==='POST')throw new Error('V6.0.2: capability probe phải đi qua browser real-provider adapter.');
+    if(path==='/api/ai/providers/test'&&method==='POST')throw new Error('V6.0.2: provider test mô phỏng đã bị vô hiệu hóa; phải kiểm tra provider thật.');
+    if(path==='/api/ai/assist'&&method==='POST')throw new Error('V6.0.3: AI assist mô phỏng đã bị vô hiệu hóa; cần provider AI thật.');
 
     if(path==='/api/ai/autopilot'&&method==='GET')return {enabled:!!db.aiCenter.autopilot};
     if(path==='/api/ai/autopilot'&&method==='POST'){db.aiCenter.autopilot=!!data.enabled;save();return {enabled:db.aiCenter.autopilot}}
@@ -206,10 +206,10 @@
       return {counts:{pending:workItems.filter(w=>w.status==='PENDING').length,analyzed:db.aiCenter.recommendations.length,awaitingHuman:db.aiCenter.recommendations.filter(r=>!db.aiCenter.decisions.some(d=>d.recommendationId===r.id)).length},workItems,recommendations:clone(db.aiCenter.recommendations),decisions:clone(db.aiCenter.decisions)};
     }
     m=path.match(/^\/api\/ai\/work-items\/([^/]+)\/process$/);
-    if(m&&method==='POST'){const w=db.aiCenter.workItems.find(x=>x.id===m[1]);if(!w)throw new Error('Không tìm thấy work item.');w.status='ANALYZED';db.aiCenter.recommendations.unshift({id:uid('rec'),decisionPoint:w.decisionPoint,researchId:w.researchId,createdAt:now(),structured:{summary:'AI demo đã phân tích điểm quyết định: hồ sơ có cấu trúc phù hợp để người có thẩm quyền xem xét; cần xác minh minh chứng và căn cứ quy định trước khi quyết định.'}});audit('AI_WORK_ITEM_PROCESS','AI_WORK_ITEM',w.id);save();return {ok:true}}
+    if(m&&method==='POST'){const w=db.aiCenter.workItems.find(x=>x.id===m[1]);if(!w)throw new Error('Không tìm thấy work item.');w.status='ANALYZED';db.aiCenter.recommendations.unshift({id:uid('rec'),decisionPoint:w.decisionPoint,researchId:w.researchId,createdAt:now(),provider:data.provider||null,structured:{summary:data.aiResult||'Không có nội dung AI thật.'}});audit('AI_WORK_ITEM_PROCESS','AI_WORK_ITEM',w.id);save();return {ok:true}}
     m=path.match(/^\/api\/ai\/recommendations\/([^/]+)\/decision$/);
     if(m&&method==='POST'){const v6=window.NuteAIActivity?.recordHumanDecision?.(m[1],{outcome:data.outcome,rationale:data.rationale,actorId:u.id});if(v6){audit('HUMAN_AI_DECISION','AI_RECOMMENDATION',m[1],{outcome:data.outcome,source:'V6_AI_ACTIVITY'});save();return {ok:true,decision:v6}}db.aiCenter.decisions.unshift({id:uid('aid'),recommendationId:m[1],outcome:data.outcome,rationale:data.rationale,createdAt:now(),actorId:u.id});audit('HUMAN_AI_DECISION','AI_RECOMMENDATION',m[1],{outcome:data.outcome});save();return {ok:true}}
-    if(path==='/api/ai/portfolio/analyze'&&method==='POST')return {result:'AI demo: Danh mục hiện có nhiều hồ sơ ở giai đoạn phê duyệt và triển khai. Nên ưu tiên xử lý hồ sơ đang chờ duyệt, chuẩn hóa minh chứng và theo dõi các mốc quá hạn. Đây là phân tích hỗ trợ, không phải quyết định quản trị.'};
+    if(path==='/api/ai/portfolio/analyze'&&method==='POST')throw new Error('V6.0.3: portfolio analysis mô phỏng đã bị vô hiệu hóa; cần provider AI thật.');
 
     if(path==='/api/intelligence/portfolio'){
       const byStatus={};for(const r of db.research)byStatus[r.status]=(byStatus[r.status]||0)+1;
