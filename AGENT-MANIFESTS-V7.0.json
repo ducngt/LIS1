@@ -1,0 +1,394 @@
+{
+  "version": "7.0.0",
+  "agents": [
+    {
+      "id": "data_intake",
+      "name": "Data Intake Agent",
+      "description": "Nhập liệu, đọc tài liệu, chuẩn hóa dữ liệu và tạo draft.",
+      "modalities": [
+        "text",
+        "document",
+        "image",
+        "audio",
+        "voice",
+        "video"
+      ],
+      "capabilities": [
+        "intake.extract",
+        "intake.classify",
+        "intake.map",
+        "draft.create"
+      ],
+      "allowedActions": [
+        "CREATE_DRAFT",
+        "CREATE_RECOMMENDATION"
+      ],
+      "forbiddenActions": [
+        "APPROVE",
+        "RECOGNIZE",
+        "SIGN"
+      ],
+      "defaultAutonomy": "RECOMMEND",
+      "enabled": true
+    },
+    {
+      "id": "research_copilot",
+      "name": "Research Copilot Agent",
+      "description": "Đồng hành nghiên cứu: đề cương, phương pháp, tài liệu, phân tích và viết học thuật.",
+      "modalities": [
+        "text",
+        "document",
+        "image",
+        "audio",
+        "voice",
+        "video"
+      ],
+      "capabilities": [
+        "research.analyze",
+        "methodology.review",
+        "literature.reason",
+        "writing.support",
+        "data.interpret"
+      ],
+      "allowedActions": [
+        "CREATE_NOTE",
+        "CREATE_DRAFT",
+        "CREATE_RECOMMENDATION"
+      ],
+      "forbiddenActions": [
+        "APPROVE",
+        "RECOGNIZE",
+        "SIGN"
+      ],
+      "defaultAutonomy": "RECOMMEND",
+      "enabled": true
+    },
+    {
+      "id": "workflow",
+      "name": "Workflow Agent",
+      "description": "Theo dõi tiến trình, deadline, gate và các hồ sơ bị tắc.",
+      "modalities": [
+        "text",
+        "document"
+      ],
+      "capabilities": [
+        "workflow.inspect",
+        "workflow.gate",
+        "deadline.monitor",
+        "workitem.create"
+      ],
+      "allowedActions": [
+        "CREATE_ALERT",
+        "CREATE_WORK_ITEM",
+        "SEND_REMINDER",
+        "CREATE_RECOMMENDATION"
+      ],
+      "forbiddenActions": [
+        "APPROVE",
+        "RECOGNIZE",
+        "SIGN"
+      ],
+      "defaultAutonomy": "AUTO_REVERSIBLE",
+      "enabled": true
+    },
+    {
+      "id": "evidence_document",
+      "name": "Evidence & Document Agent",
+      "description": "Phân tích tài liệu, minh chứng, provenance, tính đầy đủ và mâu thuẫn.",
+      "modalities": [
+        "text",
+        "document",
+        "image",
+        "audio",
+        "video"
+      ],
+      "capabilities": [
+        "document.extract",
+        "document.compare",
+        "evidence.assess",
+        "evidence.map"
+      ],
+      "allowedActions": [
+        "CLASSIFY",
+        "TAG",
+        "CREATE_ALERT",
+        "CREATE_RECOMMENDATION"
+      ],
+      "forbiddenActions": [
+        "DELETE_OFFICIAL_EVIDENCE",
+        "APPROVE"
+      ],
+      "defaultAutonomy": "RECOMMEND",
+      "enabled": true
+    },
+    {
+      "id": "governance_compliance",
+      "name": "Governance & Compliance Agent",
+      "description": "Đối chiếu quy chế, thẩm quyền, workflow và compliance.",
+      "modalities": [
+        "text",
+        "document"
+      ],
+      "capabilities": [
+        "policy.search",
+        "policy.compare",
+        "compliance.assess",
+        "authority.check"
+      ],
+      "allowedActions": [
+        "CREATE_ALERT",
+        "CREATE_RECOMMENDATION"
+      ],
+      "forbiddenActions": [
+        "CHANGE_POLICY",
+        "APPROVE",
+        "SIGN"
+      ],
+      "defaultAutonomy": "HUMAN_MANDATORY",
+      "enabled": true
+    },
+    {
+      "id": "administration",
+      "name": "Administration Agent",
+      "description": "Hỗ trợ quản trị nhân sự, tài khoản, vai trò, đơn vị và cấu hình hệ thống.",
+      "modalities": [
+        "text",
+        "document"
+      ],
+      "capabilities": [
+        "personnel.inspect",
+        "account.audit",
+        "role.review",
+        "system.inspect"
+      ],
+      "allowedActions": [
+        "CREATE_DRAFT",
+        "CREATE_RECOMMENDATION"
+      ],
+      "forbiddenActions": [
+        "GRANT_ROLE",
+        "DELETE_ACCOUNT",
+        "CHANGE_POLICY"
+      ],
+      "defaultAutonomy": "HUMAN_MANDATORY",
+      "enabled": true
+    },
+    {
+      "id": "council_review",
+      "name": "Council & Review Agent",
+      "description": "Hỗ trợ phản biện, hội đồng, tổng hợp ý kiến và biên bản.",
+      "modalities": [
+        "text",
+        "document",
+        "audio",
+        "voice",
+        "video"
+      ],
+      "capabilities": [
+        "review.synthesize",
+        "reviewer.match",
+        "meeting.transcribe",
+        "minutes.draft"
+      ],
+      "allowedActions": [
+        "CREATE_DRAFT",
+        "CREATE_RECOMMENDATION"
+      ],
+      "forbiddenActions": [
+        "VOTE",
+        "APPROVE",
+        "RECOGNIZE"
+      ],
+      "defaultAutonomy": "HUMAN_MANDATORY",
+      "enabled": true
+    },
+    {
+      "id": "portfolio_intelligence",
+      "name": "Portfolio Intelligence Agent",
+      "description": "Phân tích danh mục nghiên cứu toàn trường, xu hướng, rủi ro và năng lực.",
+      "modalities": [
+        "text",
+        "document"
+      ],
+      "capabilities": [
+        "portfolio.analyze",
+        "trend.detect",
+        "risk.detect",
+        "opportunity.detect"
+      ],
+      "allowedActions": [
+        "CREATE_ALERT",
+        "CREATE_BRIEF",
+        "CREATE_RECOMMENDATION"
+      ],
+      "forbiddenActions": [
+        "ALLOCATE_BUDGET",
+        "CHANGE_POLICY"
+      ],
+      "defaultAutonomy": "RECOMMEND",
+      "enabled": true
+    },
+    {
+      "id": "executive_intelligence",
+      "name": "Executive Intelligence Agent",
+      "description": "Decision intelligence cho Ban giám hiệu: briefing, kịch bản, định hướng và decision memory.",
+      "modalities": [
+        "text",
+        "document",
+        "audio",
+        "voice",
+        "video"
+      ],
+      "capabilities": [
+        "executive.brief",
+        "scenario.plan",
+        "decision.compare",
+        "strategy.analyze",
+        "outcome.review"
+      ],
+      "allowedActions": [
+        "CREATE_BRIEF",
+        "CREATE_SCENARIO",
+        "CREATE_DECISION_DRAFT",
+        "CREATE_RECOMMENDATION"
+      ],
+      "forbiddenActions": [
+        "ALLOCATE_BUDGET",
+        "CHANGE_POLICY",
+        "APPOINT_PERSONNEL",
+        "SIGN",
+        "APPROVE"
+      ],
+      "defaultAutonomy": "HUMAN_MANDATORY",
+      "enabled": true
+    }
+  ],
+  "tools": [
+    {
+      "id": "research.list",
+      "risk": "READ",
+      "agents": [
+        "research_copilot",
+        "workflow",
+        "portfolio_intelligence",
+        "executive_intelligence",
+        "governance_compliance"
+      ]
+    },
+    {
+      "id": "research.get",
+      "risk": "READ",
+      "agents": [
+        "data_intake",
+        "research_copilot",
+        "workflow",
+        "evidence_document",
+        "governance_compliance",
+        "council_review",
+        "portfolio_intelligence",
+        "executive_intelligence"
+      ]
+    },
+    {
+      "id": "research.create_draft",
+      "risk": "REVERSIBLE_WRITE",
+      "agents": [
+        "data_intake",
+        "research_copilot"
+      ]
+    },
+    {
+      "id": "workflow.inspect",
+      "risk": "READ",
+      "agents": [
+        "workflow",
+        "governance_compliance",
+        "executive_intelligence"
+      ]
+    },
+    {
+      "id": "knowledge.list",
+      "risk": "READ",
+      "agents": [
+        "research_copilot",
+        "evidence_document",
+        "governance_compliance",
+        "council_review",
+        "executive_intelligence"
+      ]
+    },
+    {
+      "id": "personnel.list",
+      "risk": "READ",
+      "agents": [
+        "administration",
+        "executive_intelligence",
+        "portfolio_intelligence"
+      ]
+    },
+    {
+      "id": "organization.list",
+      "risk": "READ",
+      "agents": [
+        "administration",
+        "executive_intelligence",
+        "portfolio_intelligence"
+      ]
+    },
+    {
+      "id": "audit.list",
+      "risk": "READ",
+      "agents": [
+        "administration",
+        "governance_compliance",
+        "executive_intelligence"
+      ]
+    },
+    {
+      "id": "intelligence.portfolio",
+      "risk": "READ",
+      "agents": [
+        "portfolio_intelligence",
+        "executive_intelligence"
+      ]
+    },
+    {
+      "id": "intelligence.search",
+      "risk": "READ",
+      "agents": [
+        "research_copilot",
+        "portfolio_intelligence",
+        "executive_intelligence"
+      ]
+    },
+    {
+      "id": "notification.prepare",
+      "risk": "REVERSIBLE_WRITE",
+      "agents": [
+        "workflow",
+        "administration",
+        "executive_intelligence"
+      ]
+    },
+    {
+      "id": "decision.draft",
+      "risk": "REVERSIBLE_WRITE",
+      "agents": [
+        "governance_compliance",
+        "council_review",
+        "executive_intelligence"
+      ]
+    }
+  ],
+  "criticalActions": [
+    "APPROVE",
+    "REJECT_OFFICIAL",
+    "RECOGNIZE",
+    "GRANT_ROLE",
+    "CHANGE_POLICY",
+    "ALLOCATE_BUDGET",
+    "SIGN",
+    "DISCIPLINARY_DECISION",
+    "DELETE_OFFICIAL_EVIDENCE"
+  ]
+}
